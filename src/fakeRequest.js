@@ -181,10 +181,10 @@ extend(FakeXMLHttpRequest, {
 
         var stub = stubTracker.findStub(this.url, data, this.method);
 
-        this.dispatchStub(stub);
+        this.dispatchStub(stub, this.url);
       },
 
-      dispatchStub: function(stub) {
+      dispatchStub: function(stub, url) {
         if (stub) {
           if (stub.isReturn()) {
             this.respondWith(stub);
@@ -195,6 +195,8 @@ extend(FakeXMLHttpRequest, {
           } else if (stub.isCallFunction()) {
             this.responseCallFunction(stub);
           }
+        } else {
+          throw new Error("Request fired without a matching stub" + (url || "missing url"));
         }
       },
 
