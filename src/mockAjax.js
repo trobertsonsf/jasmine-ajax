@@ -19,12 +19,15 @@ getJasmineRequireObj().MockAjax = function($ajax) {
         throw "MockAjax not installed.";
       }
       global.XMLHttpRequest = realAjaxFunction;
-
-      this.stubs.reset();
-      this.requests.reset();
-      paramParser.reset();
+      this.reset();
     };
 
+    this.reset = function() {
+      this.stubs.reset();
+      this.requests.reset();
+      paramParser.reset(); 
+    }
+    
     this.stubRequest = function(url, data, method) {
       var stub = new $ajax.RequestStub(url, data, method);
       stubTracker.addStub(stub);
